@@ -1,13 +1,4 @@
 class WritersController < ApplicationController
-  helpers do
-    def logged_in?
-      !!current_user
-    end
-
-    def current_user
-      @current_user ||= Writer.find_by_id(session[:writer_id]) if session[:writer_id]
-    end
-  end
 
   get '/signup' do
     if !logged_in?
@@ -38,7 +29,7 @@ class WritersController < ApplicationController
 
   post '/login' do
     writer = Writer.find_by(:username => params[:username])
-    # works but stores password in plain text 
+    # works but stores password in plain text
     if writer && (writer.password == params[:password])
       session[:writer_id] = writer.id
       redirect '/'

@@ -13,4 +13,14 @@ class ApplicationController < Sinatra::Base
     erb :index
   end
 
+  helpers do
+    def logged_in?
+      !!current_user
+    end
+
+    def current_user
+      @current_user ||= Writer.find_by_id(session[:writer_id]) if session[:writer_id]
+    end
+  end
+
 end

@@ -1,13 +1,19 @@
 class ListsController < ApplicationController
-  get '/lists' do
-    #TBD
-  end
 
   get '/lists/new' do
-    #TBD
+    if !logged_in?
+      redirect '/login'
+    else
+      erb :'lists/new'
+    end
   end
 
   post '/lists' do
-    #TBD
+    if params[:title].empty?
+      redirect '/lists/new'
+    else
+      current_user.lists.create(:title => params[:title])
+      redirect '/'
+    end
   end
 end
