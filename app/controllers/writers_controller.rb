@@ -29,7 +29,6 @@ class WritersController < ApplicationController
 
   post '/login' do
     writer = Writer.find_by(:username => params[:username])
-    # works but stores password in plain text
     if writer && (writer.password == params[:password])
       session[:writer_id] = writer.id
       redirect '/'
