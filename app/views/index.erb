@@ -30,7 +30,7 @@ input {
   <% end %>
 
   <% list.list_items.each do |item| %>
-    <p><%= item.description %> | <%= item.word_number %></p>
+    <p><%= item.description %> - <%= item.word_number %> words</p>
     <% if logged_in? %>
       <% if current_user.id == List.find_by_id(item.list_id).writer_id %>
       <form action="/items/<%=item.list_id%>/edit">
