@@ -6,9 +6,13 @@
 
   <nav>
     <a href="/">Homepage</a> |
-    <a href="/signup">Sign Up</a> |
-    <a href="/login">Login</a> |
-    <a href="/logout">Sign Out</a> |
+    <% if logged_in? %>
+      <a href="/lists/new">Make a List</a> |
+      <a href="/logout">Sign Out</a>
+    <% else %>
+      <a href="/signup">Sign Up</a> |
+      <a href="/login">Login</a>
+    <% end %>
   </nav>
 
   <body>

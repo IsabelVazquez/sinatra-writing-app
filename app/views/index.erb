@@ -13,27 +13,36 @@ input {
 
 <% List.all.each do |list| %>
   <h2><%= list.title %></h2>
-  <form action="/lists/<%=list.id%>/edit">
-    <input class="button" value="Edit List" type="submit">
-  </form>
-  <form method="post" action="/lists/<%=list.id%>/delete">
-    <input id="hidden" type="hidden" name="_method" value="delete">
-    <input class="button" value="Delete List" type="submit">
-  </form>
+  <% if logged_in? %>
+    <% if list.writer_id == current_user.id %>
+    <form action="/lists/<%=list.id%>/edit">
+      <input class="button" value="Edit List" type="submit">
+    </form>
+    <form method="post" action="/lists/<%=list.id%>/delete">
+      <input id="hidden" type="hidden" name="_method" value="delete">
+      <input class="button" value="Delete List" type="submit">
+    </form>
 
-  <form action="/items/new/<%=list.id%>">
-    <input class="button" value="Add List Item" type="submit">
-  </form>
+    <form action="/items/new/<%=list.id%>">
+      <input class="button" value="Add List Item" type="submit">
+    </form>
+    <% end %>
+  <% end %>
 
   <% list.list_items.each do |item| %>
     <p><%= item.description %> | <%= item.word_number %></p>
-    <form action="/items/<%=item.id%>/edit">
-      <input class="button" value="Edit List Item" type="submit">
-    </form>
-    <form method="post" action="/items/<%=item.id%>/delete">
-      <input id="hidden" type="hidden" name="_method" value="delete">
-      <input class="button" value="Delete List Item" type="submit">
-    </form>
+    <% if logged_in? %>
+      <% if list.writer_id == current_user.id %>
+      <form action="/items/<%=item.id%>/edit">
+        <input class="button" value="Edit List Item" type="submit">
+      </form>
+      <form method="post" action="/items/<%=item.id%>/delete">
+        <input id="hidden" type="hidden" name="_method" value="delete">
+        <input class="button" value="Delete List Item" type="submit">
+      </form>
+      <% end %>
+    <% end %>
+
   <% end %>
 
 <% end %>
