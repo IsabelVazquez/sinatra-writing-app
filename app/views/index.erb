@@ -1,5 +1,21 @@
-<h1>Hello World</h1>
+<style>
+form {
+    display: inline;
+    margin-top: 0em;
+}
+</style>
+
+<h1>Sinatra Writing App</h1>
 
 <% List.all.each do |list| %>
-  <%= list.title %>
+  <p><%= list.title %><form action="/lists/<%=list.id%>/edit">
+    <input class="button" value="Edit List" type="submit">
+  </form><form method="post" action="/lists/<%=list.id%>/delete">
+    <input id="hidden" type="hidden" name="_method" value="delete">
+    <input class="button" value="Delete List" type="submit">
+  </form></p>
+
+  <% list.list_items.each do |item| %>
+    <h3><%= item.description %> | <%= item.word_number %></h3><br>
+  <% end %>
 <% end %>

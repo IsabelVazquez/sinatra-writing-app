@@ -1,7 +1,7 @@
 <h1>Creating a List </h1>
 <form action="/lists" method="POST">
   <input type="text" name="title" placeholder="Title:"></br>
-  <!-- A form within a form: list_items form within lists form ? -->
-  <!-- AJAX + Sinatra https://ididitmyway.herokuapp.com/past/2011/2/27/ajax_in_sinatra/ -->
+  <input type="text" name="list_items[description]" placeholder="Description:"><br>
+  <input type="text" name="list_items[word_number]" placeholder="Word Number:"><br>
   <input type="submit" value="Create List">
 </form>
