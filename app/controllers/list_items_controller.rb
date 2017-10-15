@@ -41,5 +41,4 @@ class ListItemsController < ApplicationController
       redirect "/login"
     end
   end
-
 end

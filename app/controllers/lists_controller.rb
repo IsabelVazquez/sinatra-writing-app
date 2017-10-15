@@ -10,7 +10,7 @@ class ListsController < ApplicationController
 
   post '/lists/new' do
     if params[:title].empty?
-      redirect '/lists/new'
+      erb :'lists/new', locals: {message: "Please fill out a title."}
     else
       list = current_user.lists.create(:title => params[:title])
       list_item = ListItem.create(:description => params[:list_items][:description], :word_number => params[:list_items][:word_number])

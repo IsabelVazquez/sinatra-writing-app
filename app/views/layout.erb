@@ -16,7 +16,12 @@
   </nav>
 
   <body>
+
     <div class="container">
+      <% unless locals.empty? %>
+        <%= message %>
+      <% end %>
+      
       <%= yield %>
     </div>
   </body>
