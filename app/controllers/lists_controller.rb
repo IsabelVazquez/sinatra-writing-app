@@ -11,7 +11,7 @@ class ListsController < ApplicationController
   post '/lists' do
     if params[:title].empty?
       redirect '/lists/new'
-    else
+    elsif 
       list = current_user.lists.create(:title => params[:title])
       list_item = ListItem.create(:description => params[:list_items][:description], :word_number => params[:list_items][:word_number])
       list.list_items << list_item

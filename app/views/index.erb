@@ -8,14 +8,19 @@ form {
 <h1>Sinatra Writing App</h1>
 
 <% List.all.each do |list| %>
-  <p><%= list.title %><form action="/lists/<%=list.id%>/edit">
+  <h2><%= list.title %></h2>
+  <form action="/lists/<%=list.id%>/edit">
     <input class="button" value="Edit List" type="submit">
-  </form><form method="post" action="/lists/<%=list.id%>/delete">
+  </form>
+  <form method="post" action="/lists/<%=list.id%>/delete">
     <input id="hidden" type="hidden" name="_method" value="delete">
     <input class="button" value="Delete List" type="submit">
-  </form></p>
+  </form>
 
   <% list.list_items.each do |item| %>
     <h3><%= item.description %> | <%= item.word_number %></h3><br>
   <% end %>
+  <form action="/items/new/<%=list.id%>">
+    <input class="button" value="Add List Item" type="submit">
+  </form>
 <% end %>

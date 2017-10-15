@@ -1,4 +1,4 @@
-#
+
 require './config/environment'
 
 if ActiveRecord::Migrator.needs_migration?
@@ -8,4 +8,5 @@ end
 use Rack::MethodOverride
 use WritersController
 use ListsController
+use ListItemsController
 run ApplicationController
