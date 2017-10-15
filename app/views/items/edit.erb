@@ -1,0 +1,6 @@
+<form method="post" action="/items/edit/<%=@list.id%>">
+  <input id="hidden" type="hidden" name="_method" value="patch">
+  <input type="text" name="description" placeholder="Description:"><br>
+  <input type="text" name="word_number" placeholder="Word Number:"><br>
+  <input type="submit" value="submit">
+</form>

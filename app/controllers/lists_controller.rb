@@ -8,10 +8,10 @@ class ListsController < ApplicationController
     end
   end
 
-  post '/lists' do
+  post '/lists/new' do
     if params[:title].empty?
       redirect '/lists/new'
-    elsif 
+    else
       list = current_user.lists.create(:title => params[:title])
       list_item = ListItem.create(:description => params[:list_items][:description], :word_number => params[:list_items][:word_number])
       list.list_items << list_item

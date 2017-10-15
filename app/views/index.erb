@@ -1,7 +1,11 @@
 <style>
 form {
-    display: inline;
-    margin-top: 0em;
+  display: inline;
+  margin: 0;
+  padding: 0
+}
+input {
+  display: inline;
 }
 </style>
 
@@ -17,10 +21,19 @@ form {
     <input class="button" value="Delete List" type="submit">
   </form>
 
-  <% list.list_items.each do |item| %>
-    <h3><%= item.description %> | <%= item.word_number %></h3><br>
-  <% end %>
   <form action="/items/new/<%=list.id%>">
     <input class="button" value="Add List Item" type="submit">
   </form>
+
+  <% list.list_items.each do |item| %>
+    <p><%= item.description %> | <%= item.word_number %></p>
+    <form action="/items/<%=item.id%>/edit">
+      <input class="button" value="Edit List Item" type="submit">
+    </form>
+    <form method="post" action="/items/<%=item.id%>/delete">
+      <input id="hidden" type="hidden" name="_method" value="delete">
+      <input class="button" value="Delete List Item" type="submit">
+    </form>
+  <% end %>
+
 <% end %>
