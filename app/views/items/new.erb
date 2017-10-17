@@ -1,6 +1,6 @@
 <h1><%= @list.title %></h1>
 <form action="/items/new/<%=@list.id%>" method="POST">
-  <textarea name="description" placeholder="Description:" rows="10" cols="30"></textarea><br>
-  <input type="text" name="word_number" placeholder="Word Number:"><br>
-  <input type="submit" value="Create Line Item">
+  Item: <textarea name="description" rows="10" cols="30"></textarea><br>
+  Word Number: <input type="text" name="word_number"><br>
+  <input type="submit" value="Create List Item">
 </form>

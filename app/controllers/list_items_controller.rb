@@ -11,12 +11,17 @@ class ListItemsController < ApplicationController
 
   post '/items/new/:id' do
     @list = List.find_by_id(params[:id])
-    ListItem.create(:description => params[:description], :word_number => params[:word_number], :list_id => params[:id])
-    redirect '/'
+    if params[:description].empty? || params[:word_number].empty?
+      erb :'index', locals: {message: "Please fill out an item and word number when adding."}
+    else
+      ListItem.create(:description => params[:description], :word_number => params[:word_number], :list_id => params[:id])
+      redirect '/'
+    end
   end
 
-  get '/items/:id/edit' do
+  get '/items/:item_id/edit/:id' do
     @list = List.find_by_id(params[:id])
+    @item = ListItem.find_by_id(params[:item_id])
     if logged_in? && @list.writer_id == current_user.id
       erb :'items/edit'
     else
@@ -24,21 +29,21 @@ class ListItemsController < ApplicationController
     end
   end
 
-  patch '/items/:id/edit' do
-    @item = ListItem.find_by_id(params[:id])
+  patch '/items/:item_id/edit/:id' do
+    @item = ListItem.find_by_id(params[:item_id])
     @item.description = params[:description]
     @item.word_number = params[:word_number]
     @item.save
     redirect '/'
   end
 
-  delete '/items/:id/delete/' do
+  delete '/items/:id/delete' do
     @item = ListItem.find_by_id(params[:id])
-    if logged_in? && (current_user.id == @item.list_id.writer_id)
+    if logged_in? && (current_user.id == List.find_by_id(@item.list_id).writer_id)
       @item.delete
       redirect '/'
     else
-      redirect "/login"
+      redirect "/"
     end
   end
 end

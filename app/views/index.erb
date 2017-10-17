@@ -1,45 +1,63 @@
 <style>
 form {
-  display: inline;
+  display: inline-grid;
+  float: right;
   margin: 0;
-  padding: 0
+  padding: 0;
 }
-input {
-  display: inline;
+.item {
+  display: block;
+  float: left;
+}
+.button-delete {
+  color: red;
+}
+#add {
+  display: block;
+  float: none;
+  color: green;
+}
+ul {
+  display: inline-block;
+}
+li {
+  display: list-item;
 }
 </style>
 
 <h1>Sinatra Writing App</h1>
 
-<% List.all.each do |list| %>
+<% List.all.reverse.each do |list| %>
   <h2><%= list.title %></h2>
   <% if logged_in? %>
     <% if list.writer_id == current_user.id %>
-    <form action="/lists/<%=list.id%>/edit">
-      <input class="button" value="Edit List" type="submit">
-    </form>
     <form method="post" action="/lists/<%=list.id%>/delete">
       <input id="hidden" type="hidden" name="_method" value="delete">
-      <input class="button" value="Delete List" type="submit">
+      <input class="button-delete" value="Delete List" type="submit">
     </form>
+    <form action="/lists/<%=list.id%>/edit">
+      <input class="button" value="Edit List" type="submit">
+    </form><br>
 
-    <form action="/items/new/<%=list.id%>">
+    <form id="add" action="/items/new/<%=list.id%>">
       <input class="button" value="Add List Item" type="submit">
     </form>
     <% end %>
   <% end %>
 
   <% list.list_items.each do |item| %>
-    <p><%= item.description %> - <%= item.word_number %> words</p>
+    <ul>
+      <li><%= item.description %> - <%= item.word_number %> words</li>
+    </ul>
     <% if logged_in? %>
       <% if current_user.id == List.find_by_id(item.list_id).writer_id %>
-      <form action="/items/<%=item.list_id%>/edit">
-        <input class="button" value="Edit List Item" type="submit">
-      </form>
-      <form method="post" action="/items/<%=item.list_id%>/delete">
+      <form class="item" method="post" action="/items/<%=item.id%>/delete">
         <input id="hidden" type="hidden" name="_method" value="delete">
-        <input class="button" value="Delete List Item" type="submit">
+        <input class="button-delete" value="Delete List Item" type="submit">
       </form>
+      <form class="item" action="/items/<%=item.id%>/edit/<%=item.list_id%>">
+        <input class="button" value="Edit List Item" type="submit">
+      </form><br>
       <% end %>
     <% end %>
   <% end %>

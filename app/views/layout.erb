@@ -13,17 +13,19 @@
   </head>
 
   <nav class="navbar navbar-default">
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-        <li><a href="/">Homepage</a></li>
-        <% if logged_in? %>
-          <li><a href="/lists/new">Make a List</a></li>
-          <li><a href="/logout">Sign Out</a></li>
-        <% else %>
-          <li><a href="/signup">Sign Up</a></li>
-          <li><a href="/login">Login</a></li>
-        <% end %>
-      </ul>
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <ul class="nav navbar-nav">
+          <li><a href="/">Homepage</a></li>
+          <% if logged_in? %>
+            <li><a href="/lists/new">Make a List</a></li>
+            <li><a href="/logout">Sign Out</a></li>
+          <% else %>
+            <li><a href="/signup">Sign Up</a></li>
+            <li><a href="/login">Login</a></li>
+          <% end %>
+        </ul>
+      </div>
     </div>
   </nav>
 
