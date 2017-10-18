@@ -9,13 +9,14 @@ class WritersController < ApplicationController
   end
 
   post '/signup' do
-    if params[:username].empty? || params[:password].empty? || params[:email].empty?
-      erb :'writers/signup', locals: {message: "Please fill out all boxes with an appropriate email (sample@sample.com)."}
-    else
-      writer = Writer.create(:username => params[:username], :email => params[:email], :password => params[:password])
-      writer.save
+    writer = Writer.new(:username => params[:username], :email => params[:email], :password => params[:password])
+    if writer.save
       session[:writer_id] = writer.id
       redirect '/'
+    else
+      erb :'writers/signup', locals: {
+        message: writer.errors.full_messages.join(', ')
+      }
     end
   end
 

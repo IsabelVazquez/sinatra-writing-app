@@ -9,13 +9,21 @@ class ListsController < ApplicationController
   end
 
   post '/lists/new' do
-    if params[:title].empty?
-      erb :'lists/new', locals: {message: "Please fill out a title."}
+    list = current_user.lists.new(:title => params[:title]) # build == new
+    if list.save
+      list_item = ListItem.new(:description => params[:list_items][:description], :word_number => params[:list_items][:word_number])
+      if list_item.save
+        list.list_items << list_item
+        redirect '/'
+      else
+        erb :'lists/new', locals: {
+          message: list_item.errors.full_messages.join(', ')
+        }
+      end
     else
-      list = current_user.lists.create(:title => params[:title])
-      list_item = ListItem.create(:description => params[:list_items][:description], :word_number => params[:list_items][:word_number])
-      list.list_items << list_item
-      redirect '/'
+      erb :'lists/new', locals: {
+        message: list.errors.full_messages.join(', ')
+      }
     end
   end
 
