@@ -1,7 +1,8 @@
 <h1>Creating a List</h1>
+
 <form action="/lists/new" method="POST">
-  Title: <input type="text" name="title" placeholder="Title:"><br>
-  Item: <textarea name="list_items[description]" placeholder="" rows="10" cols="30"></textarea><br>
-  Word Number: <input type="text" name="list_items[word_number]" placeholder=""><br>
+  Title: <input type="text" name="title" value="<%= params[:title] %>"><br>
+  Item: <input type="text" name="list_items[description]"><br>
+  Word Number: <input type="text" name="list_items[word_number]"><br>
   <input type="submit" value="Create List">
 </form>

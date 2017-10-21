@@ -1,6 +1,7 @@
 <h1><%= @list.title %></h1>
 <form action="/items/new/<%=@list.id%>" method="POST">
-  Item: <textarea name="description" rows="10" cols="30"></textarea><br>
-  Word Number: <input type="text" name="word_number"><br>
+  <!-- Textarea does not hold value of params but as a placeholder -->
+  Item: <input type="text" name="description" rows="10" cols="30" value="<%= params[:description] %>"><br>
+  Word Number: <input type="text" name="word_number" value="<%= params[:word_number] %>"><br>
   <input type="submit" value="Create List Item">
 </form>

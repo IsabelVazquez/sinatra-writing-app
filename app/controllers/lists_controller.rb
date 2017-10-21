@@ -9,11 +9,13 @@ class ListsController < ApplicationController
   end
 
   post '/lists/new' do
-    list = current_user.lists.new(:title => params[:title]) # build == new
-    if list.save
-      list_item = ListItem.new(:description => params[:list_items][:description], :word_number => params[:list_items][:word_number])
+    # collection.build instantiates objects but not save them
+    list = current_user.lists.build(:title => params[:title]) # build == new
+    if !params[:list_items][:word_number].empty? || !params[:list_items][:description].empty?
+      list_item = list.list_items.build(
+        :description => params[:list_items][:description],
+        :word_number => params[:list_items][:word_number])
       if list_item.save
-        list.list_items << list_item
         redirect '/'
       else
         erb :'lists/new', locals: {
@@ -21,9 +23,13 @@ class ListsController < ApplicationController
         }
       end
     else
-      erb :'lists/new', locals: {
-        message: list.errors.full_messages.join(', ')
-      }
+      if list.save
+        redirect '/'
+      else
+        erb :'lists/new', locals: {
+          message: list.errors.full_messages.join(', ')
+        }
+      end
     end
   end
 
@@ -40,12 +46,17 @@ class ListsController < ApplicationController
     end
   end
 
-  patch '/lists/:id/edit' do
+  post '/lists/:id/edit' do
     @list = List.find_by_id(params[:id])
     if @list.writer_id = session[:writer_id]
-      @list.title = params[:title]
-      @list.save
-      redirect '/'
+      @list.update(:title => params[:title])
+      if @list.save
+        redirect '/'
+      else
+        erb :'lists/edit', locals: {
+          message: @list.errors.full_messages.join(', ')
+        }
+      end
     else
       redirect '/'
     end
@@ -53,8 +64,8 @@ class ListsController < ApplicationController
 
   delete '/lists/:id/delete' do
     @list = List.find_by_id(params[:id])
-    if logged_in? && (current_user.id == @list.writer_id)
-      @list.delete
+    if logged_in? && (current_user.id == @list.writer.id)
+      @list.destroy
       redirect '/'
     else
       redirect "/login"

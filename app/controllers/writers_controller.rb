@@ -34,6 +34,7 @@ class WritersController < ApplicationController
       session[:writer_id] = writer.id
       redirect '/'
     else
+      # Incorrect password is not a validation error => static message
       erb :'writers/login', locals: {message: "Please enter the correct username and corresponding password."}
     end
   end
