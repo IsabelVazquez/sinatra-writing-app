@@ -27,11 +27,11 @@ li {
 
 <h1>Sinatra Writing App</h1>
 
-<% List.all.reverse.each do |list| %>
+<% @lists.reverse.each do |list| %>
   <h2><%= list.title %></h2>
   <% if logged_in? %>
-    <% if list.writer_id == current_user.id %>
-    <form method="post" action="/lists/<%=list.id%>/delete">
+    <% if list.writer == current_user %>
+    <form method="post" action="/lists/<%=list.id%>">
       <input id="hidden" type="hidden" name="_method" value="delete">
       <input class="button-delete" value="Delete List" type="submit">
     </form>
@@ -50,8 +50,8 @@ li {
       <li><%= item.description %> - <%= item.word_number %> words</li>
     </ul>
     <% if logged_in? %>
-      <% if current_user.id == List.find_by_id(item.list_id).writer_id %>
-      <form class="item" method="post" action="/items/<%=item.id%>/delete">
+      <% if current_user == list.writer %>
+      <form class="item" method="post" action="/items/<%=item.id%>">
         <input id="hidden" type="hidden" name="_method" value="delete">
         <input class="button-delete" value="Delete List Item" type="submit">
       </form>

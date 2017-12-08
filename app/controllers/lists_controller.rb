@@ -8,7 +8,7 @@ class ListsController < ApplicationController
     end
   end
 
-  post '/lists/new' do
+  post '/lists' do
     # collection.build instantiates objects but not save them
     list = current_user.lists.build(:title => params[:title]) # build == new
     if !params[:list_items][:word_number].empty? || !params[:list_items][:description].empty?
@@ -46,7 +46,7 @@ class ListsController < ApplicationController
     end
   end
 
-  post '/lists/:id/edit' do
+  put '/lists/:id' do
     @list = List.find_by_id(params[:id])
     if @list.writer_id = session[:writer_id]
       @list.update(:title => params[:title])
@@ -62,7 +62,7 @@ class ListsController < ApplicationController
     end
   end
 
-  delete '/lists/:id/delete' do
+  delete '/lists/:id' do
     @list = List.find_by_id(params[:id])
     if logged_in? && (current_user.id == @list.writer.id)
       @list.destroy

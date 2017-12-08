@@ -47,7 +47,7 @@ class ListItemsController < ApplicationController
     end
   end
 
-  delete '/items/:id/delete' do
+  delete '/items/:id' do
     @item = ListItem.find_by_id(params[:id])
     if logged_in? && (current_user.id == List.find_by_id(@item.list_id).writer_id)
       @item.delete
