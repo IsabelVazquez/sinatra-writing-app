@@ -7,6 +7,7 @@ gem 'rake'
 gem 'require_all'
 gem 'thin'
 gem 'bcrypt'
+gem 'pg'
 
 group :development do
 	gem 'shotgun'
